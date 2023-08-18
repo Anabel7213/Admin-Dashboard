@@ -7,6 +7,7 @@ Built with Next.js, React, and TypeScript, it employs reusable logic components 
 
 All data is overseen by a relational database and interacted with through Prisma, utilizing queries from PlanetScale. The dashboard also supports light/dark and system themes through the Next.js theme provider.
 
+Oprimized for Production ✔️
 Deployed with Vercel, fully functional and lightning fast 🚀.
 
 ##LOGIN CREDENTIALS FOR DEMO & TESTING:
