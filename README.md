@@ -1,4 +1,4 @@
-# admin-dashboard
+# Admin E-Commerce Dashboard
 Fully Configurable &amp; Reusable Admin e-Commerce Dashboard
 
 This is a standalone e-commerce dashboard that can be easily reconfigured for use with any type of store to manage inventories, categories, and orders, among other functionalities.
