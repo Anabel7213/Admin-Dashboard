@@ -1,6 +1,7 @@
 "use client"
 
 import { ColumnDef } from "@tanstack/react-table"
+import { ArrowUpDown } from "lucide-react";
 
 export type OrderColumn = {
   id: string;
@@ -15,7 +16,16 @@ export type OrderColumn = {
 export const columns: ColumnDef<OrderColumn>[] = [
   {
     accessorKey: "products",
-    header: "Products",
+    header: ({ column }) => {
+      return (
+        <div className="flex items-center"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Products
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </div>
+      )
+    },
   },
   {
     accessorKey: "phone",
@@ -27,7 +37,16 @@ export const columns: ColumnDef<OrderColumn>[] = [
   },
   {
     accessorKey: "totalPrice",
-    header: "Total price",
+    header: ({ column }) => {
+      return (
+        <div className="flex items-center"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Total Price
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </div>
+      )
+    },
   },
   {
     accessorKey: "isPaid",
