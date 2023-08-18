@@ -14,3 +14,7 @@ Fully functional and lightning fast 🚀.
 ## LOGIN CREDENTIALS FOR DEMO & TESTING:
 email: codetestonly01@gmail.com
 password: ejslfwenf
+
+## Bug
+When you log in you are likely to see the "error occured on client side" popup. Simply reload the page, and it will disappear. 
+This doesn't happen on localhost but nevertheless the bug is already being addressed. Also currently working on mobile optimization, so it's highly recommended to use on a desktop for now.
