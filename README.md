@@ -8,3 +8,7 @@ Built with Next.js, React and TypeScript it uses reusable pieces of logic to mak
 All data is managed by a relational database and sent to Prisma queried by PlanetScale. The dashboard also supports light/dark and system themes achived with Next.js theme provider.
 
 At this point it's completely functional but certain aspects are still being improved, so it's yet to be deployed and is now available in plain code to fork.
+
+LOGIN CREDENTIALS FOR DEMO & TESTING:
+email: codetestonly01@gmail.com
+password: ejslfwenf
