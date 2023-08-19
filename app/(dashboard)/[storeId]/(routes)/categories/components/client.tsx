@@ -7,7 +7,6 @@ import { Button } from "@/components/ui/button";
 import { DataTable } from "@/components/ui/data-table";
 import { Heading } from "@/components/ui/heading";
 import { Separator } from "@/components/ui/separator";
-import { ApiAlert } from "@/components/ui/api-alert";
 
 import { columns, CategoryColumn } from "./columns";
 import { ApiList } from "@/components/ui/api-list";

@@ -15,8 +15,6 @@ model Store {
   billboards      Billboard[] @relation("StoreToBillboard")
   categories      Category[] @relation("StoreToCategory")
   products        Product[]  @relation("StoreToProduct")
-  sizes           Size[]     @relation("StoreToSize")
-  colors          Color[]     @relation("StoreToColor")
   orders          Order[]     @relation("StoreToOrder")
   createdAt       DateTime   @default(now())
   updatedAt       DateTime   @updatedAt
@@ -51,28 +49,27 @@ model Category {
 }
 
 model Product {
-  id          String    @id @default(uuid())
-  storeId     String    // Foreign Key to Store
-  store       Store     @relation("StoreToProduct", fields: [storeId], references: [id])
-  categoryId  String    // Foreign Key to Category
-  category    Category  @relation("CategoryToProduct", fields: [categoryId], references: [id])
-  name        String
-  price       Decimal
-  isFeatured  Boolean   @default(false)
-  isArchived  Boolean   @default(false)
-  sizeId      String    // Foreign Key to Size
-  size        Size      @relation(fields: [sizeId], references: [id])
-  colorId     String    // Foreign Key to Color
-  color       Color     @relation(fields: [colorId], references: [id])
-  images      Image[]   // Relation to Image model
-  orderItems  OrderItem[]   // Relation to Order model
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
+  id             String    @id @default(uuid())
+  storeId        String    // Foreign Key to Store
+  store          Store     @relation("StoreToProduct", fields: [storeId], references: [id])
+  categoryId     String    // Foreign Key to Category
+  category       Category  @relation("CategoryToProduct", fields: [categoryId], references: [id])
+  name           String    
+  description    String    @default("No product description.")
+  specifications String    @default("No custom specifications.")
+  price          Decimal
+  quantity       Int       @default(1)
+  isFeatured     Boolean   @default(false)
+  isArchived     Boolean   @default(false)
+  size           String
+  color          String
+  images         Image[]   // Relation to Image model
+  orderItems     OrderItem[]   // Relation to Order model
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
 
   @@index([storeId])
   @@index([categoryId])
-  @@index([sizeId])
-  @@index([colorId])
 }
 
 model Order {
@@ -99,32 +96,6 @@ model OrderItem {
 
   @@index([orderId])
   @@index([productId])
-}
-
-model Size {
-  id          String    @id @default(uuid())
-  storeId     String    // Foreign Key to Store
-  store       Store     @relation("StoreToSize", fields: [storeId], references: [id])
-  name        String
-  value       String
-  products    Product[] // Relation to Product model
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
-
-  @@index([storeId])
-}
-
-model Color {
-  id          String   @id @default(uuid())
-  storeId     String   // Foreign Key to Store
-  store       Store    @relation("StoreToColor", fields: [storeId], references: [id])
-  name        String
-  value       String
-  products    Product[] // Relation to Product model
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
-
-  @@index([storeId])
 }
 
 model Image {
