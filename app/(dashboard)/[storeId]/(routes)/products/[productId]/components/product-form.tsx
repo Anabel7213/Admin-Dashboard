@@ -21,6 +21,11 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form"
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover"
 import { Separator } from "@/components/ui/separator"
 import { Heading } from "@/components/ui/heading"
 import { AlertModal } from "@/components/modals/alert-modal"
@@ -32,13 +37,16 @@ import { Textarea } from "@/components/ui/textarea"
 const formSchema = z.object({
   name: z.string().min(1),
   description: z.string().min(1),
-  specifications: z.string().min(1),
   images: z.object({ url: z.string() }).array(),
   price: z.coerce.number().min(1),
   quantity: z.coerce.number().min(1),
   categoryId: z.string().min(1),
-  color: z.string().min(1),
-  size: z.string().min(1),
+  color: z.string().optional(),
+  size: z.string().optional(),
+  width: z.string().optional(),
+  height: z.string().optional(),
+  material: z.string().optional(),
+  condition: z.string().optional(),
   isFeatured: z.boolean().default(false).optional(),
   isArchived: z.boolean().default(false).optional()
 });
@@ -73,13 +81,16 @@ export const ProductForm: React.FC<ProductFormProps> = ({
   } : {
     name: "",
     description: "",
-    specifications: "",
     images: [],
     price: 0,
     quantity: 0,
     categoryId: "",
     color: "",
     size: "",
+    width: "",
+    height: "",
+    material: "",
+    condition: "",
     isFeatured: false,
     isArchived: false,
   }
@@ -283,19 +294,106 @@ export const ProductForm: React.FC<ProductFormProps> = ({
                 </FormItem>
               )}
             />
+
+
+
+
+
+      <Popover>
+            <PopoverTrigger asChild>
+              <Button variant="outline">Specifications</Button>
+            </PopoverTrigger>
+            <PopoverContent className="w-80 space-y-3">
+
+
+          <div className="grid gap-4">
+          <div className="space-y-2">
+            <h4 className="font-medium leading-none">Parameters</h4>
+            <p className="text-sm text-muted-foreground">
+              Add custom optional parameters.
+            </p>
+          </div>
+          </div>
+
+
             <FormField
               control={form.control}
-              name="specifications"
+              name="width"
               render={({ field }) => (
                 <FormItem className="w-full">
-                  <FormLabel>Specifications</FormLabel>
+                  <FormLabel>Width</FormLabel>
                   <FormControl>
-                    <Textarea disabled={loading} placeholder="Custom specification" {...field} className="h-[164px] md:h-full lg:h-[100px] resize-none" />
+                  <Input
+                        disabled={loading}
+                        placeholder='12.8"'
+                        {...field}
+                      />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
+            <FormField
+              control={form.control}
+              name="height"
+              render={({ field }) => (
+                <FormItem className="w-full">
+                  <FormLabel>Height</FormLabel>
+                  <FormControl>
+                  <Input
+                        disabled={loading}
+                        placeholder='24.6"'
+                        {...field}
+                      />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+             <FormField
+              control={form.control}
+              name="material"
+              render={({ field }) => (
+                <FormItem className="w-full">
+                  <FormLabel>Material</FormLabel>
+                  <FormControl>
+                  <Input
+                        disabled={loading}
+                        placeholder="Steel"
+                        {...field}
+                      />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+             <FormField
+              control={form.control}
+              name="condition"
+              render={({ field }) => (
+                <FormItem className="w-full">
+                  <FormLabel>Condition</FormLabel>
+                  <FormControl>
+                  <Input
+                        disabled={loading}
+                        placeholder="New"
+                        {...field}
+                      />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            </PopoverContent>
+    </Popover>
+            
+
+
+
+
+
+
+
             </div>
             </div>
           <div className="flex flex-wrap gap-6 lg:flex-nowrap">

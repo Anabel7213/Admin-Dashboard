@@ -13,6 +13,10 @@ export type ProductColumn = {
   category: string;
   size: string;
   color: string;
+  width: string;
+  height: string;
+  material: string;
+  condition: string;
   createdAt: string;
   isFeatured: boolean;
   isArchived: boolean;
@@ -66,6 +70,7 @@ export const columns: ColumnDef<ProductColumn>[] = [
   {
     accessorKey: "size",
     header: "Size",
+    cell: ({ getValue }) => {const size = getValue(); return size == 0 ? "n/a" : size}
   },
   {
     accessorKey: "color",
@@ -76,6 +81,26 @@ export const columns: ColumnDef<ProductColumn>[] = [
         <div className="h-6 w-6 rounded-full border" style={{ backgroundColor: row.original.color }} />
       </div>
     )
+  },
+  {
+    accessorKey: "width",
+    header: "Width",
+    cell: ({ getValue }) => {const width = getValue(); return width == 0 ? "n/a" : width}
+  },
+  {
+    accessorKey: "height",
+    header: "Height",
+    cell: ({ getValue }) => {const height = getValue(); return height == 0 ? "n/a" : height}
+  },
+  {
+    accessorKey: "material",
+    header: "Material",
+    cell: ({ getValue }) => {const material = getValue(); return material == 0 ? "n/a" : material}
+  },
+  {
+    accessorKey: "condition",
+    header: "Condition",
+    cell: ({ getValue }) => {const condition = getValue(); return condition == 0 ? "n/a" : condition}
   },
   {
     accessorKey: "createdAt",

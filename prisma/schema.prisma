@@ -56,13 +56,16 @@ model Product {
   category       Category  @relation("CategoryToProduct", fields: [categoryId], references: [id])
   name           String    
   description    String    @default("No product description.")
-  specifications String    @default("No custom specifications.")
   price          Decimal
   quantity       Int       @default(1)
   isFeatured     Boolean   @default(false)
   isArchived     Boolean   @default(false)
   size           String
   color          String
+  width          String
+  height         String
+  material       String
+  condition      String
   images         Image[]   // Relation to Image model
   orderItems     OrderItem[]   // Relation to Order model
   createdAt      DateTime  @default(now())

@@ -33,6 +33,10 @@ const ProductsPage = async ({
     quantity: item.quantity,
     size: item.size,
     color: item.color,
+    width: item.width,
+    height: item.height,
+    material: item.material,
+    condition: item.condition,
     createdAt: format(item.createdAt, 'MMMM do, yyyy'),
   }));
 
