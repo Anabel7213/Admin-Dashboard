@@ -57,9 +57,15 @@ model Product {
   name           String    
   description    String    @default("No product description.")
   price          Decimal
+  cost           Decimal
+  profit         String
+  margin         String
   quantity       Int       @default(1)
   isFeatured     Boolean   @default(false)
   isArchived     Boolean   @default(false)
+  isShipping     Boolean   @default(false)
+  weight         Int
+  shippingCost   String
   size           String
   color          String
   width          String
