@@ -17,4 +17,7 @@ password: ejslfwenf
 
 ## Bug
 When you log in you are likely to see the "error occured on client side" popup. Simply reload the page, and it will disappear. 
-This doesn't happen on localhost but nevertheless the bug is already being addressed. Also currently working on mobile optimization, so it's highly recommended to use on a desktop for now.
+This doesn't happen on localhost but nevertheless the bug is already being addressed.
+
+## Update Aug 20
+Now fully optimized for all devices, you can even manage your entire inventory and add customers from your phone!
