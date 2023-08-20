@@ -13,6 +13,7 @@ model Store {
   name            String
   userId          String
   billboards      Billboard[] @relation("StoreToBillboard")
+  customers       Customer[] @relation("CustomersToStore")
   categories      Category[] @relation("StoreToCategory")
   products        Product[]  @relation("StoreToProduct")
   orders          Order[]     @relation("StoreToOrder")
@@ -116,4 +117,28 @@ model Image {
   updatedAt   DateTime @updatedAt
 
   @@index([productId])
+}
+
+model Customer {
+  id               String    @id @default(uuid())
+  firstName        String
+  lastName         String
+  email            String
+  phone            String
+  consent          Boolean   @default(false)
+  country          String    @default("United States")
+  company          String
+  address          String
+  apt              String
+  city             String
+  state            String
+  zip              String
+  secondaryPhone   String
+  notes            String
+  storeId          String
+  store            Store     @relation("CustomersToStore", fields: [storeId], references: [id])
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+
+  @@index([storeId])
 }

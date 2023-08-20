@@ -36,6 +36,7 @@
     "date-fns": "^2.30.0",
     "eslint": "8.42.0",
     "eslint-config-next": "13.4.5",
+    "i18n-iso-countries": "^7.6.0",
     "lucide-react": "^0.263.1",
     "next": "13.4.5",
     "next-cloudinary": "^4.12.0",

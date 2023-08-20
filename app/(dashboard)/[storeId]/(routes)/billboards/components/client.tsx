@@ -23,10 +23,10 @@ export const BillboardClient: React.FC<BillboardClientProps> = ({
 
   return (
     <>
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between gap-4">
         <Heading title={`Billboards (${data.length})`} description="These digital displays are your online advertisement billboards." />
         <Button onClick={() => router.push(`/${params.storeId}/billboards/new`)}>
-          <Plus className="mr-2 h-4 w-4" /> Add New
+          <Plus className="mr-2 h-4 w-4" /> Add
         </Button>
       </div>
       <Separator />

@@ -117,12 +117,12 @@ export const CategoryForm: React.FC<CategoryFormProps> = ({
       <Separator />
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 w-full">
-          <div className="md:grid md:grid-cols-3 gap-8">
+          <div className="flex w-full lg:flex-nowrap sm:flex-wrap gap-4">
             <FormField
               control={form.control}
               name="name"
               render={({ field }) => (
-                <FormItem>
+                <FormItem className="lg:w-[300px] sm:w-full">
                   <FormLabel>Name</FormLabel>
                   <FormControl>
                     <Input disabled={loading} placeholder="Category name" {...field} />
@@ -135,7 +135,7 @@ export const CategoryForm: React.FC<CategoryFormProps> = ({
               control={form.control}
               name="billboardId"
               render={({ field }) => (
-                <FormItem>
+                <FormItem className="lg:w-[300px] sm:w-full">
                   <FormLabel>Billboard</FormLabel>
                   <Select disabled={loading} onValueChange={field.onChange} value={field.value} defaultValue={field.value}>
                     <FormControl>

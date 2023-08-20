@@ -48,7 +48,7 @@ export const BillboardForm: React.FC<BillboardFormProps> = ({
   const title = initialData ? 'Edit billboard' : 'Create billboard';
   const description = initialData ? 'Edit an existing billboard.' : 'Add a brand new shiny billboard.';
   const toastMessage = initialData ? 'Billboard updated.' : 'Billboard created.';
-  const action = initialData ? 'Save changes' : 'Create';
+  const action = initialData ? 'Save Changes' : 'Create';
 
   const form = useForm<BillboardFormValues>({
     resolver: zodResolver(formSchema),
@@ -114,7 +114,7 @@ export const BillboardForm: React.FC<BillboardFormProps> = ({
       </div>
       <Separator />
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 w-full">
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
           <FormField
               control={form.control}
               name="imageUrl"
@@ -133,12 +133,12 @@ export const BillboardForm: React.FC<BillboardFormProps> = ({
                 </FormItem>
               )}
             />
-          <div className="md:grid md:grid-cols-3 gap-8">
+        <div className="flex w-full lg:flex-nowrap sm:flex-wrap gap-4">
             <FormField
               control={form.control}
               name="label"
               render={({ field }) => (
-                <FormItem>
+                <FormItem className="lg:w-[300px] sm:w-full">
                   <FormLabel>Label</FormLabel>
                   <FormControl>
                     <Input disabled={loading} placeholder="Billboard label" {...field} />

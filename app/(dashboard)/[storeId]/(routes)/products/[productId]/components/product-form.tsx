@@ -85,7 +85,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({
   const [loading, setLoading] = useState(false);
 
   const title = initialData ? "Edit product" : "Create product";
-  const description = initialData ? "Edit a product." : "Add a new product";
+  const description = initialData ? "Edit a product." : "Add a new product.";
   const toastMessage = initialData ? "Product updated." : "Product created.";
   const action = initialData ? "Save changes" : "Create";
 
