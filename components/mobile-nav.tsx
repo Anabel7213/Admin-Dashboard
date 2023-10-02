@@ -27,19 +27,9 @@ export function MobileNav({
       active: pathname === `/${params.storeId}`,
     },
     {
-      href: `/${params.storeId}/billboards`,
-      label: 'Billboards',
-      active: pathname === `/${params.storeId}/billboards`,
-    },
-    {
       href: `/${params.storeId}/categories`,
       label: 'Categories',
       active: pathname === `/${params.storeId}/categories`,
-    },
-    {
-      href: `/${params.storeId}/customers`,
-      label: 'Customers',
-      active: pathname === `/${params.storeId}/customers`,
     },
     {
       href: `/${params.storeId}/products`,
@@ -50,6 +40,26 @@ export function MobileNav({
       href: `/${params.storeId}/orders`,
       label: 'Orders',
       active: pathname === `/${params.storeId}/orders`,
+    },
+    {
+      href: `/${params.storeId}/customers`,
+      label: 'Customers',
+      active: pathname === `/${params.storeId}/customers`,
+    },
+    {
+      href: `/${params.storeId}/inquiries`,
+      label: 'Inquiries',
+      active: pathname === `/${params.storeId}/inquiries`,
+    },
+    {
+      href: `/${params.storeId}/reviews`,
+      label: 'Reviews',
+      active: pathname === `/${params.storeId}/reviews`,
+    },
+    {
+      href: `/${params.storeId}/blog`,
+      label: 'Blog',
+      active: pathname === `/${params.storeId}/post`,
     },
     {
       href: `/${params.storeId}/settings`,

@@ -25,7 +25,6 @@ const Navbar = async () => {
       <div className="flex h-16 items-center px-4">
         <StoreSwitcher items={stores} />
         <MainNav className="mx-6 sm:hidden lg:block" />
-          {/* have to add responsive mobile menu */}
         <div className="ml-auto flex items-center space-x-4">
         <MobileNav className="hidden sm:block lg:hidden mr-auto"/>
           <ThemeToggle />

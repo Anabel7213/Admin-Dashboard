@@ -43,6 +43,8 @@ const ProductsPage = async ({
     height: item.height,
     material: item.material,
     condition: item.condition,
+    brand: item.brand,
+    compatibility: item.compatibility,
     createdAt: format(item.createdAt, 'MMMM do, yyyy'),
   }));
 

@@ -2,6 +2,7 @@ import { format } from "date-fns";
 
 import prismadb from "@/lib/prismadb";
 import { formatter } from "@/lib/utils";
+import formatPhoneNumber from "@/lib/formatPhone";
 
 import { OrderColumn } from "./components/columns"
 import { OrderClient } from "./components/client";
@@ -30,7 +31,8 @@ const OrdersPage = async ({
 
   const formattedOrders: OrderColumn[] = orders.map((item) => ({
     id: item.id,
-    phone: item.phone,
+    phone: formatPhoneNumber(item.phone),
+    email: item.email,
     address: item.address,
     products: item.orderItems.map((orderItem) => orderItem.product.name).join(', '),
     totalPrice: formatter.format(item.orderItems.reduce((total, item) => {

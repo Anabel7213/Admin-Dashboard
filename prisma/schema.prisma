@@ -9,44 +9,30 @@ datasource db {
 }
 
 model Store {
-  id              String    @id @default(uuid())
+  id              String        @id @default(uuid())
   name            String
   userId          String
-  billboards      Billboard[] @relation("StoreToBillboard")
-  customers       Customer[] @relation("CustomersToStore")
-  categories      Category[] @relation("StoreToCategory")
-  products        Product[]  @relation("StoreToProduct")
-  orders          Order[]     @relation("StoreToOrder")
-  createdAt       DateTime   @default(now())
-  updatedAt       DateTime   @updatedAt
-}
-
-model Billboard {
-  id          String @id @default(uuid())
-  storeId     String
-  store       Store @relation("StoreToBillboard", fields: [storeId], references: [id])
-  label       String
-  imageUrl    String
-  categories  Category[]
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-
-  @@index([storeId])
+  customers       Customer[]     @relation("CustomersToStore")
+  inquiries       Inquiry[]      @relation("InquiryToStore")
+  reviews         Review[]      @relation("ReviewToStore")
+  categories      Category[]     @relation("StoreToCategory")
+  products        Product[]      @relation("StoreToProduct")
+  orders          Order[]        @relation("StoreToOrder")
+  blog            Blog[]         @relation("BlogToStore")
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
 }
 
 model Category {
   id          String      @id @default(uuid())
   storeId     String      // Foreign Key to Store
   store       Store       @relation("StoreToCategory", fields: [storeId], references: [id])
-  billboardId String      // Foreign Key to Billboard
-  billboard   Billboard   @relation(fields: [billboardId], references: [id])
   name        String
   products    Product[]   @relation("CategoryToProduct")
   createdAt   DateTime    @default(now())
   updatedAt   DateTime    @updatedAt
 
   @@index([storeId])
-  @@index([billboardId])
 }
 
 model Product {
@@ -55,8 +41,8 @@ model Product {
   store          Store     @relation("StoreToProduct", fields: [storeId], references: [id])
   categoryId     String    // Foreign Key to Category
   category       Category  @relation("CategoryToProduct", fields: [categoryId], references: [id])
-  name           String    
-  description    String    @default("No product description.")
+  name           String    @db.VarChar(40)
+  description    String    @default("No product description.") @db.VarChar(400)
   price          Decimal
   cost           Decimal
   profit         String
@@ -73,8 +59,11 @@ model Product {
   height         String
   material       String
   condition      String
+  compatibility  String   @default("N/A")
+  brand          String   @default("N/A")
   images         Image[]   // Relation to Image model
   orderItems     OrderItem[]   // Relation to Order model
+  reviews        Review[]
   createdAt      DateTime  @default(now())
   updatedAt      DateTime  @updatedAt
 
@@ -83,15 +72,16 @@ model Product {
 }
 
 model Order {
-  id        String    @id @default(uuid())
-  storeId     String    // Foreign Key to Store
-  store       Store     @relation("StoreToOrder", fields: [storeId], references: [id])
-  orderItems OrderItem[] // Relation to OrderItem model
-  isPaid     Boolean   @default(false)
-  phone      String    @default("")
-  address    String    @default("")
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
+  id          String        @id @default(uuid())
+  storeId     String        // Foreign Key to Store
+  store       Store         @relation("StoreToOrder", fields: [storeId], references: [id])
+  orderItems  OrderItem[]   // Relation to OrderItem model
+  isPaid      Boolean       @default(false)
+  phone       String        @default("")
+  email       String        @default("")
+  address     String        @default("")
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
 
   @@index([storeId])
 }
@@ -136,9 +126,59 @@ model Customer {
   secondaryPhone   String
   notes            String
   storeId          String
-  store            Store     @relation("CustomersToStore", fields: [storeId], references: [id])
+  store            Store     @relation("CustomersToStore", fields: [storeId], references: [id], onDelete: Cascade)
   createdAt        DateTime  @default(now())
   updatedAt        DateTime  @updatedAt
 
+  @@index([storeId])
+}
+
+model Blog {
+  id             String   @id @default(uuid())
+  name           String   
+  date           DateTime
+  content        String   @db.VarChar(5000)
+  imageUrl       String
+  isPublished    Boolean  @default(true)
+  isArchived     Boolean  @default(false)
+  storeId        String
+  store          Store    @relation("BlogToStore", fields: [storeId], references: [id])
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@index([storeId])
+}
+
+model Review {
+  id            String   @id @default(uuid())
+  name          String
+  content       String   @db.VarChar(400)
+  rating        Int
+  response      String   @default("The store has not responded to this review.") @db.VarChar(400)
+  productName   String   
+  productId     String
+  product       Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  storeId       String
+  store         Store    @relation("ReviewToStore", fields: [storeId], references: [id], onDelete: Cascade)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@index([productId])
+  @@index([storeId])
+}
+
+model Inquiry {
+  id            String   @id @default(uuid())
+  name          String
+  email         String
+  phone         String
+  subject       String
+  message       String   @db.VarChar(400)
+  status        String   @default("New")
+  storeId       String
+  store         Store    @relation("InquiryToStore", fields: [storeId], references: [id], onDelete: Cascade)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  
   @@index([storeId])
 }

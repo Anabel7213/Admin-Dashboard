@@ -5,29 +5,29 @@ import prismadb from "@/lib/prismadb";
 
 export async function GET(
   req: Request,
-  { params }: { params: { billboardId: string } }
+  { params }: { params: { postId: string } }
 ) {
   try {
-    if (!params.billboardId) {
-      return new NextResponse("Billboard id is required", { status: 400 });
+    if (!params.postId) {
+      return new NextResponse("Post ID is required", { status: 400 });
     }
 
-    const billboard = await prismadb.billboard.findUnique({
+    const post = await prismadb.blog.findUnique({
       where: {
-        id: params.billboardId
-      }
+        id: params.postId,
+      },
     });
-  
-    return NextResponse.json(billboard);
+
+    return NextResponse.json(post);
   } catch (error) {
-    console.log('[BILLBOARD_GET]', error);
+    console.log("[POST_GET]", error);
     return new NextResponse("Internal error", { status: 500 });
   }
-};
+}
 
 export async function DELETE(
   req: Request,
-  { params }: { params: { billboardId: string, storeId: string } }
+  { params }: { params: { postId: string; storeId: string } }
 ) {
   try {
     const { userId } = auth();
@@ -36,86 +36,92 @@ export async function DELETE(
       return new NextResponse("Unauthenticated", { status: 403 });
     }
 
-    if (!params.billboardId) {
-      return new NextResponse("Billboard id is required", { status: 400 });
+    if (!params.postId) {
+      return new NextResponse("Post ID is required", { status: 400 });
     }
 
     const storeByUserId = await prismadb.store.findFirst({
       where: {
         id: params.storeId,
         userId,
-      }
+      },
     });
 
     if (!storeByUserId) {
       return new NextResponse("Unauthorized", { status: 405 });
     }
 
-    const billboard = await prismadb.billboard.delete({
+    const post = await prismadb.blog.delete({
       where: {
-        id: params.billboardId,
-      }
+        id: params.postId,
+      },
     });
-  
-    return NextResponse.json(billboard);
+
+    return NextResponse.json(post);
   } catch (error) {
-    console.log('[BILLBOARD_DELETE]', error);
+    console.log("[POST_DELETE]", error);
     return new NextResponse("Internal error", { status: 500 });
   }
-};
-
+}
 
 export async function PATCH(
   req: Request,
-  { params }: { params: { billboardId: string, storeId: string } }
+  { params }: { params: { postId: string; storeId: string } }
 ) {
-  try {   
+  try {
     const { userId } = auth();
 
     const body = await req.json();
-    
-    const { label, imageUrl } = body;
-    
+
+    const {
+      name,
+      date,
+      content,
+      imageUrl
+    } = body;
+
     if (!userId) {
       return new NextResponse("Unauthenticated", { status: 403 });
     }
 
-    if (!label) {
-      return new NextResponse("Label is required", { status: 400 });
+    if (!name) {
+      return new NextResponse("Name is required", { status: 400 });
     }
 
-    if (!imageUrl) {
-      return new NextResponse("Image URL is required", { status: 400 });
+    if (!content) {
+      return new NextResponse("Content is required", { status: 400 });
     }
 
-    if (!params.billboardId) {
-      return new NextResponse("Billboard id is required", { status: 400 });
+    if (!params.postId) {
+      return new NextResponse("Post ID id is required", { status: 400 });
     }
 
     const storeByUserId = await prismadb.store.findFirst({
       where: {
         id: params.storeId,
         userId,
-      }
+      },
     });
 
     if (!storeByUserId) {
       return new NextResponse("Unauthorized", { status: 405 });
     }
 
-    const billboard = await prismadb.billboard.update({
+    const post = await prismadb.blog.update({
       where: {
-        id: params.billboardId,
+        id: params.postId,
       },
       data: {
-        label,
+        name,
+        date,
+        content,
         imageUrl
-      }
+      },
     });
-  
-    return NextResponse.json(billboard);
+
+    return NextResponse.json(post);
   } catch (error) {
-    console.log('[BILLBOARD_PATCH]', error);
+    console.log("[POST_PATCH]", error);
     return new NextResponse("Internal error", { status: 500 });
   }
-};
+}

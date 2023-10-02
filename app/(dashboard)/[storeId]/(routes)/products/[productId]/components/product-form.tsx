@@ -42,7 +42,7 @@ import { Textarea } from "@/components/ui/textarea";
 
 const formSchema = z.object({
   name: z.string().min(1),
-  description: z.string().min(1),
+  description: z.string().max(400),
   images: z.object({ url: z.string() }).array(),
   price: z.coerce.number().min(1),
   cost: z.coerce.number().min(1),
@@ -56,6 +56,8 @@ const formSchema = z.object({
   height: z.string().optional(),
   material: z.string().optional(),
   condition: z.string().optional(),
+  compatibility: z.string().optional(),
+  brand: z.string().optional(),
   isFeatured: z.boolean().default(false).optional(),
   isArchived: z.boolean().default(false).optional(),
   isShipping: z.boolean().default(false).optional(),
@@ -111,6 +113,8 @@ export const ProductForm: React.FC<ProductFormProps> = ({
         height: "",
         material: "",
         condition: "",
+        compatibility: "",
+        brand: "",
         isFeatured: false,
         isArchived: false,
         isShipping: false,
@@ -127,10 +131,8 @@ export const ProductForm: React.FC<ProductFormProps> = ({
     try {
       setLoading(true);
       if (initialData) {
-        await axios.patch(
-          `/api/${params.storeId}/products/${params.productId}`,
-          data
-        );
+        await axios.patch(`/api/${params.storeId}/products/${params.productId}`, data);
+        console.log(data)
       } else {
         await axios.post(`/api/${params.storeId}/products`, data);
       }
@@ -214,6 +216,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({
                 <FormLabel>Images</FormLabel>
                 <FormControl>
                   <ImageUpload
+                    width="w-[200px]"
                     value={field.value.map((image) => image.url)}
                     disabled={loading}
                     onChange={(url) =>
@@ -513,6 +516,40 @@ export const ProductForm: React.FC<ProductFormProps> = ({
                             <Input
                               disabled={loading}
                               placeholder="New"
+                              {...field}
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name="brand"
+                      render={({ field }) => (
+                        <FormItem className="w-full">
+                          <FormLabel>Brand</FormLabel>
+                          <FormControl>
+                            <Input
+                              disabled={loading}
+                              placeholder="Apple"
+                              {...field}
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name="compatibility"
+                      render={({ field }) => (
+                        <FormItem className="w-full">
+                          <FormLabel>Compatibility</FormLabel>
+                          <FormControl>
+                            <Input
+                              disabled={loading}
+                              placeholder="Apple Iphone 16 Pro"
                               {...field}
                             />
                           </FormControl>

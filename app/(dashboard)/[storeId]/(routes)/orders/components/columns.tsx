@@ -6,6 +6,7 @@ import { ArrowUpDown } from "lucide-react";
 export type OrderColumn = {
   id: string;
   phone: string;
+  email: string;
   address: string;
   isPaid: boolean;
   totalPrice: string;
@@ -29,7 +30,11 @@ export const columns: ColumnDef<OrderColumn>[] = [
   },
   {
     accessorKey: "phone",
-    header: "Phone",
+    header: "Phone"
+  },
+  {
+    accessorKey: "email",
+    header: "Email"
   },
   {
     accessorKey: "address",
@@ -51,5 +56,6 @@ export const columns: ColumnDef<OrderColumn>[] = [
   {
     accessorKey: "isPaid",
     header: "Paid",
+    cell: ({getValue}) => (getValue() ? "Yes" : "No")
   },
 ];

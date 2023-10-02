@@ -8,7 +8,6 @@ import { ArrowUpDown } from "lucide-react"
 export type CategoryColumn = {
   id: string
   name: string;
-  billboardLabel: string;
   createdAt: string;
 }
 
@@ -25,11 +24,6 @@ export const columns: ColumnDef<CategoryColumn>[] = [
         </div>
       )
     },
-  },
-  {
-    accessorKey: "billboard",
-    header: "Billboard",
-    cell: ({ row }) => row.original.billboardLabel,
   },
   {
     accessorKey: "createdAt",
