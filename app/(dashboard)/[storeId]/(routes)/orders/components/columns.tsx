@@ -5,6 +5,7 @@ import { ArrowUpDown } from "lucide-react";
 
 export type OrderColumn = {
   id: string;
+  name: string;
   phone: string;
   email: string;
   address: string;
@@ -29,12 +30,34 @@ export const columns: ColumnDef<OrderColumn>[] = [
     },
   },
   {
+    accessorKey: "name",
+    header: ({ column }) => {
+      return (
+        <div className="flex items-center"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Name
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </div>
+      )
+    },
+  },
+  {
     accessorKey: "phone",
     header: "Phone"
   },
   {
     accessorKey: "email",
-    header: "Email"
+    header: ({ column }) => {
+      return (
+        <div className="flex items-center"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Email
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </div>
+      )
+    },
   },
   {
     accessorKey: "address",

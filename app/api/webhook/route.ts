@@ -42,10 +42,11 @@ export async function POST(req: Request) {
         id: session?.metadata?.orderId,
       },
       data: {
+        name: session?.customer_details?.name || "",
         isPaid: true,
         address: addressString,
-        phone: session?.customer_details?.phone || '',
-        email: session?.customer_details?.email || '',
+        phone: session?.customer_details?.phone || "",
+        email: session?.customer_details?.email || "",
       },
       include: {
         orderItems: true,
