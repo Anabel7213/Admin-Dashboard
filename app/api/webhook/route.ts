@@ -37,14 +37,14 @@ export async function POST(req: Request) {
   const addressString = addressComponents.filter((c) => c !== null).join(', ');
 
   if (event.type === "checkout.session.completed") {
-    const order = await prismadb.order.update({
+    await prismadb.order.update({
       where: {
         id: session?.metadata?.orderId,
       },
       data: {
-        name: session?.customer_details?.name || "",
         isPaid: true,
         address: addressString,
+        fullName: session?.customer_details?.name || "",
         phone: session?.customer_details?.phone || "",
         email: session?.customer_details?.email || "",
       },
@@ -52,14 +52,7 @@ export async function POST(req: Request) {
         orderItems: true,
       }
     });
-
-    console.log(order)
   }
-
-  console.log(event.type)
-  console.log("checkout.session.completed")
-  console.log('Session:', session);
-  console.log('Metadata OrderId:', session?.metadata?.orderId);
 
   return new NextResponse(null, { status: 200 });
 };

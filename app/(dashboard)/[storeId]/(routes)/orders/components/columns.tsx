@@ -5,7 +5,7 @@ import { ArrowUpDown } from "lucide-react";
 
 export type OrderColumn = {
   id: string;
-  name: string;
+  fullName: string;
   phone: string;
   email: string;
   address: string;
@@ -30,7 +30,7 @@ export const columns: ColumnDef<OrderColumn>[] = [
     },
   },
   {
-    accessorKey: "name",
+    accessorKey: "fullName",
     header: ({ column }) => {
       return (
         <div className="flex items-center"
