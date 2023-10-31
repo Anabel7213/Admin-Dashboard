@@ -62,7 +62,6 @@ const formSchema = z.object({
   isArchived: z.boolean().default(false).optional(),
   isShipping: z.boolean().default(false).optional(),
   weight: z.coerce.number().optional(),
-  shippingCost: z.string().optional(),
 });
 
 type ProductFormValues = z.infer<typeof formSchema>;
@@ -119,7 +118,6 @@ export const ProductForm: React.FC<ProductFormProps> = ({
         isArchived: false,
         isShipping: false,
         weight: 0,
-        shippingCost: "",
       };
 
   const form = useForm<ProductFormValues>({
@@ -644,23 +642,6 @@ export const ProductForm: React.FC<ProductFormProps> = ({
                               type="number"
                               disabled={loading}
                               placeholder="0.0 lb"
-                              {...field}
-                            />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                    <FormField
-                      control={form.control}
-                      name="shippingCost"
-                      render={({ field }) => (
-                        <FormItem className="w-full">
-                          <FormLabel>Cost of Shipping</FormLabel>
-                          <FormControl>
-                            <Input
-                              disabled={loading}
-                              placeholder="Free"
                               {...field}
                             />
                           </FormControl>

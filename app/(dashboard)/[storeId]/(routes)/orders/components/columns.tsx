@@ -11,6 +11,9 @@ export type OrderColumn = {
   address: string;
   isPaid: boolean;
   totalPrice: string;
+  shippingType: string;
+  shippingCost: string;
+  stateTax: string;
   products: string;
   createdAt: string;
 }
@@ -70,11 +73,15 @@ export const columns: ColumnDef<OrderColumn>[] = [
         <div className="flex items-center"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Total Price
+          Total
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </div>
       )
     },
+  },
+  {
+    accessorKey: "shippingType",
+    header: "Shipping",
   },
   {
     accessorKey: "isPaid",

@@ -18,19 +18,21 @@ export async function POST(
   req: Request,
   { params }: { params: { storeId: string } }
 ) {
-  const { productIds } = await req.json();
+  const orderItems = await req.json();
 
-  if (!productIds || productIds.length === 0) {
-    return new NextResponse("Product ids are required", { status: 400 });
+  if (!orderItems || orderItems.length === 0) {
+    return new NextResponse("Order items are required", { status: 400 });
   }
 
   const products = await prismadb.product.findMany({
     where: {
       id: {
-        in: productIds
+        in: orderItems.productIds
       }
     }
   });
+
+  console.log(orderItems)
 
   const line_items: Stripe.Checkout.SessionCreateParams.LineItem[] = [];
 
@@ -47,17 +49,43 @@ export async function POST(
     });
   });
 
+  line_items.push({
+    quantity: 1,
+    price_data: {
+      currency: 'USD',
+      product_data: {
+        name: 'Shipping Cost',
+      },
+      unit_amount: orderItems.shippingCost * 100,
+    },
+  });
+
+  line_items.push({
+    quantity: 1,
+    price_data: {
+      currency: 'USD',
+      product_data: {
+        name: 'State Tax',
+      },
+      unit_amount: orderItems.stateTax * 100,
+    },
+  });
+
+
   const order = await prismadb.order.create({
     data: {
       storeId: params.storeId,
       isPaid: false,
       orderItems: {
-        create: productIds.map((productId: string) => ({
+        create: orderItems.productIds.map((productId: string) => ({
           product: {
             connect: {
               id: productId
             }
-          }
+          },
+          shippingType: orderItems.shippingType,
+          shippingCost: orderItems.shippingCost.toString(),
+          stateTax: orderItems.stateTax.toString(),
         }))
       }
     }

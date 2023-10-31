@@ -30,7 +30,6 @@ const ProductsPage = async ({
     isArchived: item.isArchived,
     isShipping: item.isShipping,
     weight: item.weight,
-    shippingCost: item.shippingCost,
     price: formatter.format(item.price.toNumber()),
     cost: formatter.format(item.cost.toNumber()),
     profit: item.profit,

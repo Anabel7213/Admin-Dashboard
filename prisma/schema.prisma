@@ -52,7 +52,6 @@ model Product {
   isArchived     Boolean   @default(false)
   isShipping     Boolean   @default(false)
   weight         Int
-  shippingCost   String
   size           String
   color          String
   width          String
@@ -72,17 +71,17 @@ model Product {
 }
 
 model Order {
-  id          String        @id @default(uuid())
-  storeId     String        // Foreign Key to Store
-  store       Store         @relation("StoreToOrder", fields: [storeId], references: [id])
-  orderItems  OrderItem[]   // Relation to OrderItem model
-  isPaid      Boolean       @default(false)
-  fullName    String        @default("")
-  phone       String        @default("")
-  email       String        @default("")
-  address     String        @default("")
-  createdAt   DateTime      @default(now())
-  updatedAt   DateTime      @updatedAt
+  id              String        @id @default(uuid())
+  storeId         String        // Foreign Key to Store
+  store           Store         @relation("StoreToOrder", fields: [storeId], references: [id])
+  orderItems      OrderItem[]   // Relation to OrderItem model
+  isPaid          Boolean       @default(false)
+  fullName        String        @default("")
+  phone           String        @default("")
+  email           String        @default("")
+  address         String        @default("")
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
 
   @@index([storeId])
 }
@@ -92,6 +91,9 @@ model OrderItem {
   id        String  @id @default(uuid())
   orderId   String  // Foreign Key to Order
   order     Order   @relation(fields: [orderId], references: [id])
+  shippingType    String        @default("")
+  shippingCost    String        @default("")
+  stateTax        String        @default("")
   productId String  // Foreign Key to Product
   product   Product @relation(fields: [productId], references: [id])
 

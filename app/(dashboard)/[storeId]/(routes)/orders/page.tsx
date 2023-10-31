@@ -36,9 +36,13 @@ const OrdersPage = async ({
     email: item.email,
     address: item.address,
     products: item.orderItems.map((orderItem) => orderItem.product.name).join(', '),
-    totalPrice: formatter.format(item.orderItems.reduce((total, item) => {
-      return total + Number(item.product.price)
-    }, 0)),
+    shippingType: item.orderItems.map((orderItem) => orderItem.shippingType)[0],
+    shippingCost: item.orderItems.map((orderItem) => orderItem.shippingCost)[0],
+    stateTax: item.orderItems.map((orderItem) => orderItem.stateTax)[0],
+    totalPrice: formatter.format(
+      item.orderItems.reduce((total, orderItem) => total + Number(orderItem.product.price), 0) +
+      Number(item.orderItems.map((orderItem) => orderItem.shippingCost)[0])
+    ),
     isPaid: item.isPaid,
     createdAt: format(item.createdAt, 'MMMM do, yyyy'),
   }));

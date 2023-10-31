@@ -26,7 +26,6 @@ export type ProductColumn = {
   isArchived: boolean;
   isShipping: boolean;
   weight: number,
-  shippingCost: string
 }
 
 export const columns: ColumnDef<ProductColumn>[] = [
