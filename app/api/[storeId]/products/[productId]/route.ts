@@ -145,7 +145,6 @@ export async function PATCH(
         isArchived,
         isShipping,
         weight,
-        shippingCost
       },
     });
 
