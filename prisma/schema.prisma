@@ -3,185 +3,185 @@ generator client {
 }
 
 datasource db {
-  provider = "mysql"
-  url = env("DATABASE_URL")
+  provider     = "mongodb"
+  url          = env("DATABASE_URL")
   relationMode = "prisma"
 }
 
 model Store {
-  id              String        @id @default(uuid())
-  name            String
-  userId          String
-  customers       Customer[]     @relation("CustomersToStore")
-  inquiries       Inquiry[]      @relation("InquiryToStore")
-  reviews         Review[]      @relation("ReviewToStore")
-  categories      Category[]     @relation("StoreToCategory")
-  products        Product[]      @relation("StoreToProduct")
-  orders          Order[]        @relation("StoreToOrder")
-  blog            Blog[]         @relation("BlogToStore")
-  createdAt       DateTime       @default(now())
-  updatedAt       DateTime       @updatedAt
+  id         String     @id @default(auto()) @map("_id") @db.ObjectId
+  name       String
+  userId     String
+  customers  Customer[] @relation("CustomersToStore")
+  inquiries  Inquiry[]  @relation("InquiryToStore")
+  reviews    Review[]   @relation("ReviewToStore")
+  categories Category[] @relation("StoreToCategory")
+  products   Product[]  @relation("StoreToProduct")
+  orders     Order[]    @relation("StoreToOrder")
+  blog       Blog[]     @relation("BlogToStore")
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
 }
 
 model Category {
-  id          String      @id @default(uuid())
-  storeId     String      // Foreign Key to Store
-  store       Store       @relation("StoreToCategory", fields: [storeId], references: [id])
-  name        String
-  products    Product[]   @relation("CategoryToProduct")
-  createdAt   DateTime    @default(now())
-  updatedAt   DateTime    @updatedAt
+  id        String    @id @default(auto()) @map("_id") @db.ObjectId
+  storeId   String    @db.ObjectId // Foreign Key to Store
+  store     Store     @relation("StoreToCategory", fields: [storeId], references: [id])
+  name      String
+  products  Product[] @relation("CategoryToProduct")
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
 
   @@index([storeId])
 }
 
 model Product {
-  id             String    @id @default(uuid())
-  storeId        String    // Foreign Key to Store
-  store          Store     @relation("StoreToProduct", fields: [storeId], references: [id])
-  categoryId     String    // Foreign Key to Category
-  category       Category  @relation("CategoryToProduct", fields: [categoryId], references: [id])
-  name           String    @db.VarChar(40)
-  description    String    @default("No product description.") @db.VarChar(400)
-  price          Decimal
-  cost           Decimal
-  profit         String
-  margin         String
-  quantity       Int       @default(1)
-  isFeatured     Boolean   @default(false)
-  isArchived     Boolean   @default(false)
-  isShipping     Boolean   @default(false)
-  weight         Int
-  size           String
-  color          String
-  width          String
-  height         String
-  material       String
-  condition      String
-  compatibility  String   @default("N/A")
-  brand          String   @default("N/A")
-  images         Image[]   // Relation to Image model
-  orderItems     OrderItem[]   // Relation to Order model
-  reviews        Review[]
-  createdAt      DateTime  @default(now())
-  updatedAt      DateTime  @updatedAt
+  id            String      @id @default(auto()) @map("_id") @db.ObjectId
+  storeId       String      @db.ObjectId // Foreign Key to Store
+  store         Store       @relation("StoreToProduct", fields: [storeId], references: [id])
+  categoryId    String      @db.ObjectId // Foreign Key to Category
+  category      Category    @relation("CategoryToProduct", fields: [categoryId], references: [id])
+  name          String
+  description   String      @default("No product description.")
+  price         String
+  cost          String
+  profit        String
+  margin        String
+  quantity      Int         @default(1)
+  isFeatured    Boolean     @default(false)
+  isArchived    Boolean     @default(false)
+  isShipping    Boolean     @default(false)
+  weight        Int
+  size          String
+  color         String
+  width         String
+  height        String
+  material      String
+  condition     String
+  compatibility String      @default("N/A")
+  brand         String      @default("N/A")
+  images        Image[] // Relation to Image model
+  orderItems    OrderItem[] // Relation to Order model
+  reviews       Review[]
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
 
   @@index([storeId])
   @@index([categoryId])
 }
 
 model Order {
-  id              String        @id @default(uuid())
-  storeId         String        // Foreign Key to Store
-  store           Store         @relation("StoreToOrder", fields: [storeId], references: [id])
-  orderItems      OrderItem[]   // Relation to OrderItem model
-  isPaid          Boolean       @default(false)
-  fullName        String        @default("")
-  phone           String        @default("")
-  email           String        @default("")
-  address         String        @default("")
-  createdAt       DateTime      @default(now())
-  updatedAt       DateTime      @updatedAt
+  id         String      @id @default(auto()) @map("_id") @db.ObjectId
+  storeId    String      @db.ObjectId // Foreign Key to Store
+  store      Store       @relation("StoreToOrder", fields: [storeId], references: [id])
+  orderItems OrderItem[] // Relation to OrderItem model
+  isPaid     Boolean     @default(false)
+  fullName   String      @default("")
+  phone      String      @default("")
+  email      String      @default("")
+  address    String      @default("")
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
 
   @@index([storeId])
 }
 
 // Intermediary for a many-to-many relationship
 model OrderItem {
-  id        String  @id @default(uuid())
-  orderId   String  // Foreign Key to Order
-  order     Order   @relation(fields: [orderId], references: [id])
-  shippingType    String        @default("")
-  shippingCost    String        @default("")
-  stateTax        String        @default("")
-  productId String  // Foreign Key to Product
-  product   Product @relation(fields: [productId], references: [id])
+  id           String  @id @default(auto()) @map("_id") @db.ObjectId
+  orderId      String  @db.ObjectId // Foreign Key to Order
+  order        Order   @relation(fields: [orderId], references: [id])
+  shippingType String  @default("")
+  shippingCost String  @default("")
+  stateTax     String  @default("")
+  productId    String  @db.ObjectId // Foreign Key to Product
+  product      Product @relation(fields: [productId], references: [id])
 
   @@index([orderId])
   @@index([productId])
 }
 
 model Image {
-  id          String   @id @default(uuid())
-  productId   String   // Foreign Key to Product
-  product     Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
-  url         String   // URL of the image
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  productId String   @db.ObjectId // Foreign Key to Product
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  url       String // URL of the image
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@index([productId])
 }
 
 model Customer {
-  id               String    @id @default(uuid())
-  firstName        String
-  lastName         String
-  email            String
-  phone            String
-  consent          Boolean   @default(false)
-  country          String    @default("United States")
-  company          String
-  address          String
-  apt              String
-  city             String
-  state            String
-  zip              String
-  secondaryPhone   String
-  notes            String
-  storeId          String
-  store            Store     @relation("CustomersToStore", fields: [storeId], references: [id], onDelete: Cascade)
-  createdAt        DateTime  @default(now())
-  updatedAt        DateTime  @updatedAt
-
-  @@index([storeId])
-}
-
-model Blog {
-  id             String   @id @default(uuid())
-  name           String   
-  date           DateTime
-  content        String   @db.VarChar(5000)
-  imageUrl       String
-  isPublished    Boolean  @default(true)
-  isArchived     Boolean  @default(false)
-  storeId        String
-  store          Store    @relation("BlogToStore", fields: [storeId], references: [id])
+  id             String   @id @default(auto()) @map("_id") @db.ObjectId
+  firstName      String
+  lastName       String
+  email          String
+  phone          String
+  consent        Boolean  @default(false)
+  country        String   @default("United States")
+  company        String
+  address        String
+  apt            String
+  city           String
+  state          String
+  zip            String
+  secondaryPhone String
+  notes          String
+  storeId        String   @db.ObjectId
+  store          Store    @relation("CustomersToStore", fields: [storeId], references: [id], onDelete: Cascade)
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
 
   @@index([storeId])
 }
 
+model Blog {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  name        String
+  date        DateTime
+  content     String
+  imageUrl    String
+  isPublished Boolean  @default(true)
+  isArchived  Boolean  @default(false)
+  storeId     String   @db.ObjectId
+  store       Store    @relation("BlogToStore", fields: [storeId], references: [id])
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([storeId])
+}
+
 model Review {
-  id            String   @id @default(uuid())
-  name          String
-  content       String   @db.VarChar(400)
-  rating        Int
-  response      String   @default("The store has not responded to this review.") @db.VarChar(400)
-  productName   String   
-  productId     String
-  product       Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
-  storeId       String
-  store         Store    @relation("ReviewToStore", fields: [storeId], references: [id], onDelete: Cascade)
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  name        String
+  content     String
+  rating      Int
+  response    String   @default("The store has not responded to this review.")
+  productName String
+  productId   String   @db.ObjectId
+  product     Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  storeId     String   @db.ObjectId
+  store       Store    @relation("ReviewToStore", fields: [storeId], references: [id], onDelete: Cascade)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 
   @@index([productId])
   @@index([storeId])
 }
 
 model Inquiry {
-  id            String   @id @default(uuid())
-  name          String
-  email         String
-  phone         String
-  subject       String
-  message       String   @db.VarChar(400)
-  status        String   @default("New")
-  storeId       String
-  store         Store    @relation("InquiryToStore", fields: [storeId], references: [id], onDelete: Cascade)
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
-  
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  name      String
+  email     String
+  phone     String
+  subject   String
+  message   String
+  status    String   @default("New")
+  storeId   String   @db.ObjectId
+  store     Store    @relation("InquiryToStore", fields: [storeId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
   @@index([storeId])
 }
