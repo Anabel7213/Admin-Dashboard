@@ -7,6 +7,15 @@ const BlogPage = async ({
 }: {
   params: { postId: string, storeId: string }
 }) => {
+  if(params.postId === "new") {
+    return ( 
+      <div className="flex-col">
+        <div className="flex-1 space-y-4 p-8 pt-6">
+          <BlogForm initialData={null} />
+        </div>
+      </div>
+    );
+  }
   const post = await prismadb.blog.findUnique({
     where: {
       id: params.postId,

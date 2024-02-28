@@ -43,8 +43,8 @@ model Product {
   category      Category    @relation("CategoryToProduct", fields: [categoryId], references: [id])
   name          String
   description   String      @default("No product description.")
-  price         String
-  cost          String
+  price         Int
+  cost          Int
   profit        String
   margin        String
   quantity      Int         @default(1)

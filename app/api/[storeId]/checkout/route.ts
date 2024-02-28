@@ -44,7 +44,7 @@ export async function POST(
         product_data: {
           name: product.name,
         },
-        unit_amount: parseFloat(product.price.toString()) * 100
+        unit_amount: product.price * 100
       }
     });
   });

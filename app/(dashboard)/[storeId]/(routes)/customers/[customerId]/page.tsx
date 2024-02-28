@@ -7,6 +7,15 @@ const CategoryPage = async ({
 }: {
   params: { customerId: string, storeId: string }
 }) => {
+  if(params.customerId === "new") {
+    return ( 
+      <div className="flex-col">
+        <div className="flex-1 space-y-4 p-8 pt-6">
+          <CustomerForm initialData={null} />
+        </div>
+      </div>
+    );
+  }
   const customers = await prismadb.customer.findUnique({
     where: {
       id: params.customerId
