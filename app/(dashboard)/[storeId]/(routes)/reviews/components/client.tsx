@@ -16,7 +16,6 @@ export const ReviewsClient: React.FC<ReviewsClientProps> = ({
 
   return (
     <>
-    <button onClick={() => console.log(data)}>test</button>
       <div className="flex items-center justify-between gap-4">
         <Heading title={`Reviews (${data.length})`} description="Respond to customer inquiries and resolve order issues." />
       </div>
