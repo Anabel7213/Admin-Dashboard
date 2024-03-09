@@ -10,7 +10,7 @@ const CategoryPage = async ({
   if(params.customerId === "new") {
     return ( 
       <div className="flex-col">
-        <div className="flex-1 space-y-4 p-8 pt-6">
+        <div className="flex-1 space-y-4 py-8 px-4 pt-6">
           <CustomerForm initialData={null} />
         </div>
       </div>
@@ -24,7 +24,7 @@ const CategoryPage = async ({
 
   return ( 
     <div className="flex-col">
-      <div className="flex-1 space-y-4 p-8 pt-6">
+      <div className="flex-1 space-y-4 py-8 px-4 pt-6">
         <CustomerForm initialData={customers} />
       </div>
     </div>

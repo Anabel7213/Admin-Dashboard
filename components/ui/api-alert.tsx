@@ -35,14 +35,17 @@ export const ApiAlert: React.FC<ApiAlertProps> = ({
   return ( 
     <Alert>
       <AlertTitle className="flex items-center gap-2">
-      <Server className="h-4 w-4" />
+      <Server size={18} />
         {title}
         <Badge variant={variantMap[variant]}>
           {textMap[variant]}
         </Badge>
       </AlertTitle>
       <AlertDescription className="mt-4 flex items-center justify-between gap-6">
-        <code className="relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold">
+        <code className="md:hidden">
+          {description?.slice(0,20) + "..."}
+        </code>
+        <code className="hidden md:block w-full rounded bg-muted py-[0.2rem] font-mono text-sm font-semibold">
           {description}
         </code>
         <Button variant="outline" size="sm" onClick={() => onCopy(description)}>

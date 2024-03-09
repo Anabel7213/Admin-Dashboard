@@ -165,7 +165,7 @@ export const ReviewForm: React.FC<ReviewFormProps> = ({ initialData }) => {
                   )}
                 />
               </div>
-              <div className="flex gap-4 flex-col">
+              <div className="flex gap-4 flex-col md:flex-row">
               <FormField
                   control={form.control}
                   name="content"

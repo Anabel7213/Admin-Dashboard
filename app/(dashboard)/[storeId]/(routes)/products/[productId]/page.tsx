@@ -16,7 +16,7 @@ const ProductPage = async ({
 
     return ( 
       <div className="flex-col">
-        <div className="flex-1 space-y-4 p-8 pt-6">
+        <div className="flex-1 space-y-4 py-8 px-4 pt-6">
           <ProductForm 
             categories={categories} 
             initialData={null}
@@ -42,7 +42,7 @@ const ProductPage = async ({
 
   return ( 
     <div className="flex-col">
-      <div className="flex-1 space-y-4 p-8 pt-6">
+      <div className="flex-1 space-y-4 py-8 px-4 pt-6">
         <ProductForm 
           categories={categories} 
           initialData={product}

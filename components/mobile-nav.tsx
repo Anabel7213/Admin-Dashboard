@@ -74,7 +74,7 @@ export function MobileNav({
       {...props}
     >
      <DropdownMenu>
-  <DropdownMenuTrigger className="flex items-end"><Button variant="outline">Menu</Button></DropdownMenuTrigger>
+  <DropdownMenuTrigger className="flex items-end ml-4 md:ml-0"><Button size={"sm"} variant="outline">Menu</Button></DropdownMenuTrigger>
   <DropdownMenuContent>
     {routes.map((route) => (
     <DropdownMenuItem className="flex p-2" key={route.href}>

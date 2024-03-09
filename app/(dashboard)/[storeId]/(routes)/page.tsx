@@ -26,34 +26,41 @@ const DashboardPage: React.FC<DashboardPageProps> = async ({
 
   return (
     <div className="flex-col">
-      <div className="flex-1 space-y-4 p-8 pt-6">
+      <div className="flex-1 space-y-4 px-4 py-8 pt-6">
         <Heading title="Dashboard" description="Overview of your store" />
         <Separator />
-        <div className="grid gap-4 grid-cols-3">
-          <Card>
-            <CardHeader className="flex lg:flex-row sm:flex-col lg:items-center sm:items-start justify-between space-y-0 pb-2">
+        <div className="grid md:grid-cols-3 sm:grid-cols-2 gap-4">
+          <Card className="sm:col-span-2 md:col-span-1">
+            <CardHeader className="space-y-0 pb-2">
+            <div className="flex justify-between">
               <CardTitle className="text-sm font-medium">
                 Total Revenue
               </CardTitle>
-              <DollarSign className="h-4 w-4 text-muted-foreground" />
+              <div><DollarSign size={18} className="text-muted-foreground" /></div>
+            </div>
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">{formatter.format(totalRevenue)}</div>
             </CardContent>
           </Card>
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Sales</CardTitle>
-              <CreditCard className="h-4 w-4 text-muted-foreground" />
+          <Card className="col-span-1">
+            <CardHeader className="space-y-0 pb-2">
+              <div className="flex justify-between">
+                <CardTitle className="text-sm font-medium">Sales</CardTitle>
+                <div><CreditCard size={18} className="text-muted-foreground" /></div>
+              </div>
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">+{salesCount}</div>
             </CardContent>
           </Card>
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Products In Stock</CardTitle>
-              <Package className="h-4 w-4 text-muted-foreground" />
+          <Card className="col-span-1">
+            <CardHeader className="space-y-0 pb-2">
+            <div className="flex justify-between">
+              <CardTitle className="text-sm font-medium hidden md:block">Products In Stock</CardTitle>
+              <CardTitle className="text-sm font-medium md:hidden">In Stock</CardTitle>
+              <div><Package size={18} className="text-muted-foreground" /></div>
+            </div>
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">{stockCount}</div>
